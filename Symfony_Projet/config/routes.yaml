@@ -1,0 +1,199 @@
+# config/routes.yaml
+
+api_register:
+    path: /api/register
+    controller: App\Controller\ApiController::register
+    methods: POST
+
+# config/routes.yaml
+
+api_login:
+    path: /api/login
+    controller: App\Controller\LoginController::login
+    methods: POST
+
+api_check_auth:
+    path: /api/check-auth
+    controller: App\Controller\AuthController::checkAuth
+    methods: GET
+
+get_joueurs:
+    path: /api/joueurs
+    controller: App\Controller\JoueurController::getJoueurs
+    methods: GET
+
+add_joueur:
+    path: /api/joueurs
+    controller: App\Controller\JoueurController::addJoueur
+    methods: POST
+
+update_joueur:
+    path: /api/joueurs/{id}
+    controller: App\Controller\JoueurController::updateJoueur
+    methods: PUT
+
+delete_joueur:
+    path: /api/joueurs/{id}
+    controller: App\Controller\JoueurController::deleteJoueur
+    methods: DELETE
+
+get_products:
+  path: /api/produits
+  controller: App\Controller\BoutiqueAdminController::getProducts
+  methods: GET
+
+add_product:
+  path: /api/produits
+  controller: App\Controller\BoutiqueAdminController::addProduct
+  methods: POST
+
+boutique_add_product:
+    path: /api/produits
+    controller: App\Controller\BoutiqueAdminController::addProduct
+    methods: POST
+
+boutique_get_products:
+    path: /api/produits
+    controller: App\Controller\BoutiqueAdminController::getProducts
+    methods: GET
+
+boutique_delete_product:
+    path: /api/produits/{id}
+    controller: App\Controller\BoutiqueAdminController::deleteProduct
+    methods: DELETE
+
+boutique_update_stock:
+    path: /api/produits/{id}/stock
+    controller: App\Controller\BoutiqueAdminController::updateStock
+    methods: PUT
+    requirements:
+        id: '\d+'
+
+update_stock:
+    path: /api/produits/{id}/stock
+    controller: App\Controller\BoutiqueAdminController::updateStock
+    methods: [PUT]
+    requirements:
+        id: '\d+' 
+
+# ===== NOUVELLES ROUTES DASHBOARD =====
+
+dashboard_stats:
+    path: /api/dashboard/stats
+    controller: App\Controller\JoueurController::getDashboardStats
+    methods: GET
+
+dashboard_joueurs_stats:
+    path: /api/dashboard/joueurs-stats
+    controller: App\Controller\JoueurController::getJoueursStats
+    methods: GET
+
+dashboard_boutique_stats:
+    path: /api/dashboard/boutique-stats
+    controller: App\Controller\JoueurController::getBoutiqueStats
+    methods: GET
+
+get_actualites:
+    path: /api/actualites
+    controller: App\Controller\JoueurController::getActualites
+    methods: GET
+
+add_actualite:
+    path: /api/actualites
+    controller: App\Controller\JoueurController::addActualite
+    methods: POST
+
+update_actualite:
+    path: /api/actualites/{id}
+    controller: App\Controller\JoueurController::updateActualite
+    methods: PUT
+    requirements:
+        id: '\d+'
+
+delete_actualite:
+    path: /api/actualites/{id}
+    controller: App\Controller\JoueurController::deleteActualite
+    methods: DELETE
+    requirements:
+        id: '\d+'    
+
+        # ===== ROUTES ENTRAÎNEMENTS =====
+
+get_entrainements:
+    path: /api/entrainements
+    controller: App\Controller\JoueurController::getEntrainements
+    methods: GET
+
+add_entrainement:
+    path: /api/entrainements
+    controller: App\Controller\JoueurController::addEntrainement
+    methods: POST
+
+update_entrainement:
+    path: /api/entrainements/{id}
+    controller: App\Controller\JoueurController::updateEntrainement
+    methods: PUT
+    requirements:
+        id: '\d+'
+
+delete_entrainement:
+    path: /api/entrainements/{id}
+    controller: App\Controller\JoueurController::deleteEntrainement
+    methods: DELETE
+    requirements:
+        id: '\d+'
+
+assigner_joueur_entrainement:
+    path: /api/entrainements/assigner-joueur
+    controller: App\Controller\JoueurController::assignerJoueurEntrainement
+    methods: POST
+
+retirer_joueur_entrainement:
+    path: /api/entrainements/retirer-joueur
+    controller: App\Controller\JoueurController::retirerJoueurEntrainement
+    methods: DELETE
+
+api_entrainements_list:
+    path: /api/entrainements
+    controller: App\Controller\JoueurController::getEntrainements
+    methods: [GET]
+
+api_entrainements_add:
+    path: /api/entrainements
+    controller: App\Controller\JoueurController::addEntrainement
+    methods: [POST]
+
+api_entrainements_delete:
+    path: /api/entrainements/{id}
+    controller: App\Controller\JoueurController::deleteEntrainement
+    methods: [DELETE]    
+
+# === ROUTES MATCHS ===
+api_matchs_list:
+    path: /api/matchs
+    controller: App\Controller\JoueurController::getMatchs
+    methods: [GET]
+
+api_matchs_add:
+    path: /api/matchs
+    controller: App\Controller\JoueurController::addMatch
+    methods: [POST]
+
+api_matchs_update:
+    path: /api/matchs/{id}
+    controller: App\Controller\JoueurController::updateMatch
+    methods: [PUT]
+    requirements:
+        id: '\d+'
+
+api_matchs_delete:
+    path: /api/matchs/{id}
+    controller: App\Controller\JoueurController::deleteMatch
+    methods: [DELETE]
+    requirements:
+        id: '\d+'
+
+api_matchs_stats:
+    path: /api/matchs/stats
+    controller: App\Controller\JoueurController::getMatchsStats
+    methods: [GET]    

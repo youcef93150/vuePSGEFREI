@@ -1,0 +1,23 @@
+parameters:
+    uploads_directory: '%kernel.project_dir%/public/uploads'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+        public: true
+        
+    # Ajouter explicitement le contrôleur CORS comme un abonné d'événement
+    App\Controller\CorsController:
+        tags:
+            - { name: kernel.event_subscriber }
+        public: true
