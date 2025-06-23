@@ -19,25 +19,25 @@ class Entrainements
     #[ORM\Column(type: "text", nullable: true)]
     private $description;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "date_entrainement", type: "datetime")]
     private $dateEntrainement;
 
     #[ORM\Column(type: "string", length: 150)]
     private $lieu;
 
-    #[ORM\Column(type: "integer")]
+    #[ORM\Column(name: "duree_minutes", type: "integer")]
     private $dureeMinutes = 120;
 
-    #[ORM\Column(type: "string", length: 50)]
+    #[ORM\Column(name: "type_entrainement", type: "string", length: 50)]
     private $typeEntrainement;
 
     #[ORM\Column(type: "string", length: 20)]
     private $statut = 'programme';
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "created_at", type: "datetime")]
     private $createdAt;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "updated_at", type: "datetime")]
     private $updatedAt;
 
     public function __construct()

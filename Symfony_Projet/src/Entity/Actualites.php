@@ -19,13 +19,13 @@ class Actualites
     #[ORM\Column(type: "text")]
     private $contenu;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "date_publication", type: "datetime")]
     private $datePublication;
 
     #[ORM\Column(type: "string", length: 100)]
     private $auteur;
 
-    #[ORM\Column(type: "string", length: 500, nullable: true)]
+    #[ORM\Column(name: "image_url", type: "string", length: 500, nullable: true)]
     private $imageUrl;
 
     #[ORM\Column(type: "string", length: 20)]
@@ -37,10 +37,10 @@ class Actualites
     #[ORM\Column(type: "integer")]
     private $commentaires = 0;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "created_at", type: "datetime")]
     private $createdAt;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "updated_at", type: "datetime")]
     private $updatedAt;
 
     public function __construct()

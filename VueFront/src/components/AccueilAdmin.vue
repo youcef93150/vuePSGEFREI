@@ -8,8 +8,7 @@
         </router-link>
       </div>
       <div class="nav-links">
-        <router-link to="/JoueursAdmin">Gérer les joueurs du club</router-link> |
-        <router-link to="/BoutiqueAdmin">Gérer la boutique</router-link>
+        <!-- Navigation links vides maintenant -->
       </div>
       <div class="nav-actions">
         <button class="notification-btn" @click="toggleNotifications">
@@ -21,13 +20,13 @@
 
     <!-- Header -->
     <header class="hero-section">
-      <h1>PARIS SAINT-GERMAIN</h1>
-      <p>Bienvenue sur la plateforme d'administration du club</p>
+      <h1>Tableau de bord</h1>
+      <p>Bienvenue sur la plateforme d'administration</p>
       <div class="tabs">
         <button 
           v-for="tab in tabs" 
           :key="tab.id"
-          @click="activeTab = tab.id"
+          @click="handleTabClick(tab)"
           :class="['tab-btn', { 'active': activeTab === tab.id }]"
         >
           {{ tab.label }}
@@ -82,6 +81,10 @@
           <div class="card">
             <h2>📰 Actualités du club</h2>
             
+            <button v-if="!showAddForm" @click="showAddForm = true" class="add-btn">
+              ➕ Ajouter une actualité
+            </button>
+            
             <!-- Formulaire d'ajout d'actualité -->
             <div v-if="showAddForm" class="form">
               <h3>Ajouter une nouvelle actualité</h3>
@@ -107,10 +110,6 @@
                 </div>
               </div>
             </div>
-            
-            <button v-if="!showAddForm" @click="showAddForm = true" class="add-btn">
-              ➕ Ajouter une actualité
-            </button>
           </div>
         </div>
 
@@ -404,7 +403,9 @@ export default {
       tabs: [
         { id: 'actualites', label: 'Actualités' },
         { id: 'matches', label: 'Matchs' },
-        { id: 'entrainements', label: 'Entraînements' }
+        { id: 'entrainements', label: 'Entraînements' },
+        { id: 'joueurs', label: 'Gérer les joueurs', route: '/JoueursAdmin' },
+        { id: 'boutique', label: 'Gérer la boutique', route: '/BoutiqueAdmin' }
       ],
       
       // ===== STATISTIQUES =====
@@ -468,6 +469,17 @@ export default {
   },
 
   methods: {
+    // ===== NAVIGATION =====
+    handleTabClick(tab) {
+      if (tab.route) {
+        // Si l'onglet a une route, navigue vers cette page
+        this.$router.push(tab.route);
+      } else {
+        // Sinon, change l'onglet actif
+        this.activeTab = tab.id;
+      }
+    },
+
     // ===== CHARGEMENT DES DONNÉES =====
     async loadData() {
       this.loading = true;
@@ -798,7 +810,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #002b5c;
+  background: #9ca3af;
   padding: 15px 25px;
   color: white;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -808,15 +820,10 @@ export default {
   height: 50px; 
 }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
-  color: #c8102e;
+.nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .nav-actions {
@@ -826,9 +833,9 @@ export default {
 }
 
 .notification-btn, .logout-button {
-  background: #c8102e;
+  background: #d1d5db;
   border: none;
-  color: white;
+  color: #374151;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -836,12 +843,13 @@ export default {
 }
 
 .notification-btn:hover, .logout-button:hover {
-  background: #a00d24;
+  background: #6b7280;
+  color: white;
 }
 
 .badge {
   background: white;
-  color: #c8102e;
+  color: #9ca3af;
   border-radius: 50%;
   padding: 2px 6px;
   font-size: 12px;
@@ -851,7 +859,7 @@ export default {
 
 /* ===== HERO SECTION ===== */
 .hero-section {
-  background: linear-gradient(45deg, #002b5c, #c8102e);
+  background: linear-gradient(45deg, #9ca3af, #d1d5db);
   color: white;
   text-align: center;
   padding: 40px 20px;
@@ -872,29 +880,34 @@ export default {
 .tabs {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 15px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .tab-btn {
   background: rgba(255,255,255,0.2);
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 12px 20px;
   border-radius: 25px;
   cursor: pointer;
   transition: all 0.3s;
   font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .tab-btn:hover {
   background: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
 }
 
 .tab-btn.active {
   background: white;
-  color: #002b5c;
+  color: #9ca3af;
   font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* ===== LOADING ===== */
@@ -904,14 +917,14 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 50px;
-  color: #002b5c;
+  color: #9ca3af;
 }
 
 .spinner {
   width: 40px;
   height: 40px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #002b5c;
+  border-top: 4px solid #9ca3af;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 16px;
@@ -927,7 +940,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 20px;
-  background-color: #f5f5f5;
+  background-color: #f7fafc;
   min-height: calc(100vh - 180px);
 }
 
@@ -947,7 +960,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 4px solid #002b5c;
+  border-left: 4px solid #9ca3af;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -958,14 +971,14 @@ export default {
 
 .stat-info p {
   margin: 0;
-  color: #666;
+  color: #9ca3af;
   font-size: 14px;
   font-weight: 500;
 }
 
 .stat-info h3 {
   margin: 8px 0 0 0;
-  color: #002b5c;
+  color: #4b5563;
   font-size: 28px;
   font-weight: bold;
 }
@@ -1009,11 +1022,11 @@ export default {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
 }
 
 .card h2, .card h3 {
-  color: #002b5c;
+  color: #4b5563;
   margin-bottom: 24px;
   font-weight: bold;
 }
@@ -1031,15 +1044,15 @@ export default {
 
 /* ===== FORMS ===== */
 .form {
-  background: #f8f9fa;
+  background: #f7fafc;
   padding: 24px;
   border-radius: 12px;
   margin-bottom: 24px;
-  border: 2px solid #e9ecef;
+  border: 2px solid #e2e8f0;
 }
 
 .form h3 {
-  color: #002b5c;
+  color: #4b5563;
   margin-bottom: 20px;
   font-size: 18px;
 }
@@ -1054,7 +1067,7 @@ export default {
 .input, .textarea, select {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #cbd5e0;
   border-radius: 8px;
   font-size: 14px;
   transition: border-color 0.3s, box-shadow 0.3s;
@@ -1062,8 +1075,8 @@ export default {
 
 .input:focus, .textarea:focus, select:focus {
   outline: none;
-  border-color: #002b5c;
-  box-shadow: 0 0 0 3px rgba(0, 43, 92, 0.1);
+  border-color: #9ca3af;
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.1);
 }
 
 .textarea {
@@ -1080,15 +1093,15 @@ export default {
 
 /* ===== SCORE SECTION ===== */
 .score-section {
-  background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%);
+  background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
   padding: 20px;
   border-radius: 12px;
   margin: 20px 0;
-  border-left: 4px solid #1976d2;
+  border-left: 4px solid #718096;
 }
 
 .score-section h4 {
-  color: #002b5c;
+  color: #2d3748;
   margin-bottom: 16px;
   font-size: 16px;
 }
@@ -1101,7 +1114,7 @@ export default {
 
 .score-input label {
   font-weight: 600;
-  color: #002b5c;
+  color: #2d3748;
   font-size: 14px;
 }
 
@@ -1112,7 +1125,7 @@ export default {
 
 .players-section label {
   font-weight: 600;
-  color: #002b5c;
+  color: #2d3748;
   margin-bottom: 12px;
   display: block;
 }
@@ -1131,7 +1144,7 @@ export default {
   gap: 8px;
   max-height: 250px;
   overflow-y: auto;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
   padding: 12px;
   border-radius: 8px;
   background: white;
@@ -1148,7 +1161,7 @@ export default {
 }
 
 .player-item:hover {
-  background: #f0f0f0;
+  background: #f7fafc;
 }
 
 .player-item input[type="checkbox"] {
@@ -1158,7 +1171,7 @@ export default {
 
 /* ===== BUTTONS ===== */
 .btn-success {
-  background: #28a745;
+  background: #48bb78;
   color: white;
   border: none;
   padding: 12px 20px;
@@ -1169,11 +1182,11 @@ export default {
 }
 
 .btn-success:hover {
-  background: #218838;
+  background: #38a169;
 }
 
 .btn-secondary {
-  background: #6c757d;
+  background: #9ca3af;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -1184,11 +1197,11 @@ export default {
 }
 
 .btn-secondary:hover {
-  background: #5a6268;
+  background: #6b7280;
 }
 
 .btn-danger {
-  background: #dc3545;
+  background: #f56565;
   color: white;
   border: none;
   padding: 8px 12px;
@@ -1199,12 +1212,12 @@ export default {
 }
 
 .btn-danger:hover {
-  background: #c82333;
+  background: #e53e3e;
 }
 
 .add-btn {
   width: 100%;
-  background: #002b5c;
+  background: #9ca3af;
   color: white;
   border: none;
   padding: 16px;
@@ -1217,7 +1230,7 @@ export default {
 }
 
 .add-btn:hover {
-  background: #001a3d;
+  background: #6b7280;
 }
 
 .btn-success:disabled {
@@ -1233,7 +1246,7 @@ export default {
 }
 
 .news-item, .training-item, .match-item {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e2e8f0;
   padding: 20px;
   border-radius: 12px;
   transition: all 0.3s;
@@ -1261,13 +1274,13 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  color: #666;
+  color: #718096;
   margin: 12px 0;
 }
 
 .match-detail {
   margin: 10px 0;
-  color: #666;
+  color: #718096;
   font-size: 14px;
 }
 
@@ -1280,13 +1293,13 @@ export default {
 }
 
 .venue.domicile {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: #bee3f8;
+  color: #2b6cb0;
 }
 
 .venue.extérieur {
-  background: #ffebee;
-  color: #d32f2f;
+  background: #fed7d7;
+  color: #c53030;
 }
 
 .status {
@@ -1297,37 +1310,37 @@ export default {
 }
 
 .status.programme {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: #bee3f8;
+  color: #2b6cb0;
 }
 
 .status.en-cours {
-  background: #fff8e1;
-  color: #f57c00;
+  background: #faf089;
+  color: #975a16;
 }
 
 .status.termine {
-  background: #e8f5e8;
-  color: #388e3c;
+  background: #c6f6d5;
+  color: #276749;
 }
 
 .status.reporte {
-  background: #fff3e0;
-  color: #f57c00;
+  background: #fed7aa;
+  color: #c05621;
 }
 
 .status.annule {
-  background: #ffebee;
-  color: #d32f2f;
+  background: #fed7d7;
+  color: #c53030;
 }
 
 .match-result {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
   padding: 20px;
   border-radius: 12px;
   margin: 16px 0;
   text-align: center;
-  border: 2px solid #dee2e6;
+  border: 2px solid #e2e8f0;
 }
 
 .score {
@@ -1341,12 +1354,12 @@ export default {
 
 .result {
   font-size: 28px;
-  color: #002b5c;
+  color: #2d3748;
   font-weight: 900;
 }
 
 .team {
-  color: #495057;
+  color: #4a5568;
   font-weight: 600;
 }
 
@@ -1355,19 +1368,19 @@ export default {
 }
 
 .victory {
-  color: #28a745;
+  color: #48bb78;
   font-weight: bold;
   font-size: 16px;
 }
 
 .defeat {
-  color: #dc3545;
+  color: #f56565;
   font-weight: bold;
   font-size: 16px;
 }
 
 .draw {
-  color: #ffc107;
+  color: #ed8936;
   font-weight: bold;
   font-size: 16px;
 }
@@ -1381,8 +1394,8 @@ export default {
 }
 
 .player-tag {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: #bee3f8;
+  color: #2b6cb0;
   padding: 4px 10px;
   border-radius: 16px;
   font-size: 12px;
@@ -1396,10 +1409,10 @@ export default {
 .empty {
   text-align: center;
   padding: 60px 20px;
-  color: #6c757d;
-  background: #f8f9fa;
+  color: #718096;
+  background: #f7fafc;
   border-radius: 12px;
-  border: 2px dashed #dee2e6;
+  border: 2px dashed #e2e8f0;
 }
 
 /* ===== SIDEBAR STATS ===== */
@@ -1414,7 +1427,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e2e8f0;
   font-size: 14px;
 }
 
@@ -1423,12 +1436,12 @@ export default {
 }
 
 .stat-row span:first-child {
-  color: #495057;
+  color: #4a5568;
   font-weight: 500;
 }
 
 .stat-row span:last-child {
-  color: #002b5c;
+  color: #2d3748;
   font-weight: bold;
 }
 
@@ -1447,7 +1460,7 @@ export default {
 }
 
 .panel-header {
-  background: #002b5c;
+  background: #9ca3af;
   color: white;
   padding: 24px;
   display: flex;
@@ -1485,29 +1498,29 @@ export default {
 
 .notification {
   padding: 16px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e2e8f0;
   border-radius: 8px;
   margin-bottom: 8px;
 }
 
 .notification.success {
-  background: #d4edda;
-  border-left: 4px solid #28a745;
+  background: #c6f6d5;
+  border-left: 4px solid #48bb78;
 }
 
 .notification.error {
-  background: #f8d7da;
-  border-left: 4px solid #dc3545;
+  background: #fed7d7;
+  border-left: 4px solid #f56565;
 }
 
 .notification p {
   margin: 0 0 4px 0;
   font-weight: 500;
-  color: #002b5c;
+  color: #2d3748;
 }
 
 .notification small {
-  color: #6c757d;
+  color: #718096;
   font-size: 12px;
 }
 
@@ -1532,10 +1545,6 @@ export default {
   
   .notifications-panel {
     width: 100%;
-  }
-  
-  .nav-links {
-    display: none;
   }
   
   .tabs {
@@ -1609,5 +1618,15 @@ export default {
   .form {
     padding: 16px;
   }
+  
+  .tabs {
+    gap: 8px;
+  }
+  
+  .tab-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+ 
 }
 </style>

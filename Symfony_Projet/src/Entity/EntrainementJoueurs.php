@@ -13,10 +13,10 @@ class EntrainementJoueurs
     #[ORM\Column(type: "integer")]
     private $id;
 
-    #[ORM\Column(type: "integer")]
+    #[ORM\Column(name: "entrainement_id", type: "integer")]
     private $entrainementId;
 
-    #[ORM\Column(type: "integer")]
+    #[ORM\Column(name: "joueur_id", type: "integer")]
     private $joueurId;
 
     #[ORM\Column(type: "boolean")]
@@ -25,7 +25,7 @@ class EntrainementJoueurs
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $excuse;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "created_at", type: "datetime")]
     private $createdAt;
 
     public function __construct()

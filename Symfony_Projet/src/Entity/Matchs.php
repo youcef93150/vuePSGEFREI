@@ -16,28 +16,28 @@ class Matchs
     #[ORM\Column(type: "string", length: 100)]
     private $equipeDomicile;
 
-    #[ORM\Column(type: "string", length: 100)]
+    #[ORM\Column(name: "equipe_exterieur", type: "string", length: 100)]
     private $equipeExterieure;
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "date_match", type: "datetime")]
     private $dateMatch;
 
-    #[ORM\Column(type: "string", length: 50)]
+    #[ORM\Column(type: "string", length: 100)]
     private $competition;
 
-    #[ORM\Column(type: "string", length: 200)]
+    #[ORM\Column(type: "string", length: 150)]
     private $stade;
 
-    #[ORM\Column(type: "integer", nullable: true)]
+    #[ORM\Column(name: "score_domicile", type: "integer", nullable: true)]
     private $scoreDomicile = null;
 
-    #[ORM\Column(type: "integer", nullable: true)]
+    #[ORM\Column(name: "score_exterieur", type: "integer", nullable: true)]
     private $scoreExterieure = null;
 
     #[ORM\Column(type: "string", length: 20)]
     private $statut = 'programme';
 
-    #[ORM\Column(type: "datetime")]
+    #[ORM\Column(name: "created_at", type: "datetime")]
     private $createdAt;
 
     public function __construct()
