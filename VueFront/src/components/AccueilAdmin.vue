@@ -405,7 +405,8 @@ export default {
         { id: 'matches', label: 'Matchs' },
         { id: 'entrainements', label: 'Entraînements' },
         { id: 'joueurs', label: 'Gérer les joueurs', route: '/JoueursAdmin' },
-        { id: 'boutique', label: 'Gérer la boutique', route: '/BoutiqueAdmin' }
+        { id: 'boutique', label: 'Gérer la boutique', route: '/BoutiqueAdmin' },
+        
       ],
       
       // ===== STATISTIQUES =====

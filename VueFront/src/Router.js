@@ -72,7 +72,7 @@ const routes = [
   {
     path: '/:pathMatch(.*)*', // Gestion des routes inexistantes
     redirect: '/login',
-  },
+  }
 
 ];
 
